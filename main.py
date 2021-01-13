@@ -16,8 +16,8 @@ class Main(QWidget):
         super().__init__()
 
         self.setWindowTitle("afDownloader")
-        self.setGeometry(200, 200, 700, 350)
-        self.setFixedSize(700,350)
+        self.setGeometry(200, 200, 700, 330)
+        self.setFixedSize(700,330)
         self.setWindowIcon(QIcon('./assets/youtube-dl-gui.png'))
 
         self.content()
