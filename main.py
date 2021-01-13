@@ -52,10 +52,10 @@ class Main(QWidget):
         self.videoDownloadAlert.resize(50,20)
         self.videoDownloadAlert.setFont(label)
 
-        self.chooseDirLabel = QLabel("", self)
-        self.chooseDirLabel.move(20,90)
-        self.chooseDirLabel.resize(500,40)
-        self.chooseDirLabel.setFont(label)
+        self.chooseDirVideoLabel = QLabel("", self)
+        self.chooseDirVideoLabel.move(20,90)
+        self.chooseDirVideoLabel.resize(500,40)
+        self.chooseDirVideoLabel.setFont(label)
 
         # Playlist 
         playlistText = QLabel("Playlist Link", self)
@@ -81,10 +81,10 @@ class Main(QWidget):
         self.playListDownloadAlert.resize(50,20)
         self.playListDownloadAlert.setFont(label)
        
-        self.chooseDirLabel1 = QLabel("", self)
-        self.chooseDirLabel1.move(20,250)
-        self.chooseDirLabel1.resize(500,40)
-        self.chooseDirLabel1.setFont(label)
+        self.chooseDirPlayListLabel = QLabel("", self)
+        self.chooseDirPlayListLabel.move(20,250)
+        self.chooseDirPlayListLabel.resize(500,40)
+        self.chooseDirPlayListLabel.setFont(label)
 
      def center(self):
         qr = self.frameGeometry()
@@ -94,22 +94,22 @@ class Main(QWidget):
      
      def clearVideoData(self):
         self.videoDownloadAlert.setText("")
-        self.chooseDirLabel.setText("")
+        self.chooseDirVideoLabel.setText("")
         self.videoLink.clear()
-
+     
      def chooseDirVideo(self):
         self.videoDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.videoDir:
-            self.chooseDirLabel.setText(f"Directory Selected: {self.videoDir}")
+            self.chooseDirVideoLabel.setText(f"Directory Selected: {self.videoDir}")
         """else:
-            self.chooseDirLabel.setText("Directory not Selected.")"""       
+            self.chooseDirVideoLabel.setText("Directory not Selected.")"""       
      
      def chooseDirPlaylist(self):
         self.playListDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.playListDir:
-            self.chooseDirLabel1.setText(f"Directory Selected: {self.playListDir}")
+            self.chooseDirPlayListLabel.setText(f"Directory Selected: {self.playListDir}")
         else:
-            self.chooseDirLabel1.setText("Directory not Selected.")
+            self.chooseDirPlayListLabel.setText("Directory not Selected.")
        
      def videoDownload(self):
          self.link = self.videoLink.text()
