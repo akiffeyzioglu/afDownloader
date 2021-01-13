@@ -8,6 +8,7 @@ from PyQt5.QtCore import *
 
 font = QFont("Century Gothic", 20)
 label = QFont("Century Gothic", 13)
+clearButtonFont = QFont("Century Gothic", 10)
 
 class Main(QWidget):
 
@@ -25,27 +26,28 @@ class Main(QWidget):
         
      def content(self):
         # Single Video
-        videoText = QLabel("Video Link", self)
+        videoText = QLabel("Video Link:", self)
         videoText.move(20,45)
         videoText.setFont(font)
         
         self.videoLink = QLineEdit(self)
-        self.videoLink.setGeometry(150,40,400,50)
+        self.videoLink.setGeometry(160,40,400,50)
         self.videoLink.setFont(font)
 
         downloadButton = QPushButton("", self)
-        downloadButton.setGeometry(630,45,50,30)
+        downloadButton.setGeometry(630,40,50,30)
         downloadButton.clicked.connect(self.videoDownload)
         downloadButton.setIcon(QIcon('./assets/cloud_download_32px.png'))
 
         chooseDirectory = QPushButton("", self)
-        chooseDirectory.setGeometry(575,45,50,30)
+        chooseDirectory.setGeometry(575,40,50,30)
         chooseDirectory.setIcon(QIcon('./assets/folder_32px.png'))
         chooseDirectory.clicked.connect(self.chooseDirVideo)
 
         clearData = QPushButton("Clear Video Data", self)
-        clearData.setGeometry(575,80,105,30)
+        clearData.setGeometry(575,75,105,30)
         clearData.clicked.connect(self.clearVideoData)
+        clearData.setFont(clearButtonFont)
 
         self.videoDownloadAlert = QLabel("", self)
         self.videoDownloadAlert.move(600,20)
@@ -58,7 +60,7 @@ class Main(QWidget):
         self.chooseDirVideoLabel.setFont(label)
 
         # Playlist 
-        playlistText = QLabel("Playlist Link", self)
+        playlistText = QLabel("Playlist Link:", self)
         playlistText.move(20,200)
         playlistText.setFont(font)
         
@@ -67,18 +69,19 @@ class Main(QWidget):
         self.playListLink.setFont(font)
 
         downloadButton1 = QPushButton("", self)
-        downloadButton1.setGeometry(640,200,50,30)
+        downloadButton1.setGeometry(640,190,50,30)
         downloadButton1.setIcon(QIcon('./assets/cloud_download_32px.png'))
         downloadButton1.clicked.connect(self.playListDownload)
 
         chooseDirectory1 = QPushButton("", self)
-        chooseDirectory1.setGeometry(585,200,50,30)
+        chooseDirectory1.setGeometry(580,190,50,30)
         chooseDirectory1.setIcon(QIcon('./assets/folder_32px.png'))
         chooseDirectory1.clicked.connect(self.chooseDirPlaylist)
 
         clearPlayListDataButton = QPushButton("Clear Playlist Data", self)
-        clearPlayListDataButton.setGeometry(585,235,105,30)
+        clearPlayListDataButton.setGeometry(580,225,110,30)
         clearPlayListDataButton.clicked.connect(self.clearPlayListData)
+        clearPlayListDataButton.setFont(clearButtonFont)
 
         self.playListDownloadAlert = QLabel("", self)
         self.playListDownloadAlert.move(600, 175)
