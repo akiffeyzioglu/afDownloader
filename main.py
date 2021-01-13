@@ -1,5 +1,6 @@
 import os 
 import sys
+import time
 import pytube
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
@@ -41,6 +42,10 @@ class Main(QWidget):
         chooseDirectory.setGeometry(575,45,50,30)
         chooseDirectory.setIcon(QIcon('./assets/folder_32px.png'))
         chooseDirectory.clicked.connect(self.chooseDirVideo)
+
+        clearData = QPushButton("Clear Video Data", self)
+        clearData.setGeometry(575,80,105,30)
+        clearData.clicked.connect(self.clearVideoData)
 
         self.videoDownloadAlert = QLabel("", self)
         self.videoDownloadAlert.move(600,20)
@@ -87,19 +92,24 @@ class Main(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
      
+     def clearVideoData(self):
+        self.videoDownloadAlert.setText("")
+        self.chooseDirLabel.setText("")
+        self.videoLink.clear()
+
      def chooseDirVideo(self):
         self.videoDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.videoDir:
-            self.chooseDirLabel.setText(f"Dizin seçildi: {self.videoDir}")
+            self.chooseDirLabel.setText(f"Directory Selected: {self.videoDir}")
         """else:
-            self.chooseDirLabel.setText("Dizin seçilmedi.")"""       
+            self.chooseDirLabel.setText("Directory not Selected.")"""       
      
      def chooseDirPlaylist(self):
         self.playListDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.playListDir:
-            self.chooseDirLabel1.setText(f"Dizin seçildi: {self.playListDir}")
+            self.chooseDirLabel1.setText(f"Directory Selected: {self.playListDir}")
         else:
-            self.chooseDirLabel1.setText("Dizin seçilmedi.")
+            self.chooseDirLabel1.setText("Directory not Selected.")
        
      def videoDownload(self):
          self.link = self.videoLink.text()
@@ -107,9 +117,8 @@ class Main(QWidget):
          youtube = pytube.YouTube(self.link)
          video = youtube.streams.get_highest_resolution()
          video.download(self.videoDir + "/")
-         self.videoLink.clear()
-         self.videoDownloadAlert.setText("Done!") 
-      
+         self.videoDownloadAlert.setText("Done!")
+
      def playListDownload(self):
         self.playList = self.playListLink.text()
         youtube_playlist = pytube.Playlist(self.playlist)
