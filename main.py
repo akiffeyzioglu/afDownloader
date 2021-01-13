@@ -76,6 +76,10 @@ class Main(QWidget):
         chooseDirectory1.setIcon(QIcon('./assets/folder_32px.png'))
         chooseDirectory1.clicked.connect(self.chooseDirPlaylist)
 
+        clearPlayListDataButton = QPushButton("Clear Playlist Data", self)
+        clearPlayListDataButton.setGeometry(585,235,105,30)
+        clearPlayListDataButton.clicked.connect(self.clearPlayListData)
+
         self.playListDownloadAlert = QLabel("", self)
         self.playListDownloadAlert.move(600, 175)
         self.playListDownloadAlert.resize(50,20)
@@ -97,6 +101,11 @@ class Main(QWidget):
         self.chooseDirVideoLabel.setText("")
         self.videoLink.clear()
      
+     def clearPlayListData(self):
+         self.playListDownloadAlert.setText("")
+         self.chooseDirPlayListLabel.setText("")
+         self.playListLink.setText("")
+
      def chooseDirVideo(self):
         self.videoDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.videoDir:
@@ -121,7 +130,7 @@ class Main(QWidget):
 
      def playListDownload(self):
         self.playList = self.playListLink.text()
-        youtube_playlist = pytube.Playlist(self.playlist)
+        youtube_playlist = pytube.Playlist(self.playList)
 
         for playlist in youtube_playlist:
                 video = pytube.YouTube(playlist)
