@@ -1,6 +1,5 @@
 import os 
 import sys
-import time
 import pytube
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
