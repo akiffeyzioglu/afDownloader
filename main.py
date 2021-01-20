@@ -4,11 +4,12 @@ import sys
 import pytube
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 from pytube import Stream
 
 font = QFont("Century Gothic", 20)
 label = QFont("Century Gothic", 13)
-clearButtonFont = QFont("Century Gothic", 10)
+buttonFont = QFont("Century Gothic", 10)
 
 class Main(QWidget):
 
@@ -19,6 +20,13 @@ class Main(QWidget):
         self.setGeometry(200, 200, 700, 330)
         self.setFixedSize(700,330)
         self.setWindowIcon(QIcon('./assets/youtube-dl-gui.png'))
+
+        # Background color palatte 
+        self.setAutoFillBackground(True)
+        defaultColorPalette = self.palette()
+        # Set default background color
+        defaultColorPalette.setColor(self.backgroundRole(), Qt.cyan)
+        self.setPalette(defaultColorPalette)
 
         self.content()
         self.center()
@@ -55,7 +63,7 @@ class Main(QWidget):
         clearData = QPushButton("Clear Video Data", self)
         clearData.setGeometry(575,75,105,30)
         clearData.clicked.connect(self.clearVideoData)
-        clearData.setFont(clearButtonFont)
+        clearData.setFont(buttonFont)
 
         self.videoDownloadAlert = QLabel("", self)
         self.videoDownloadAlert.move(600,7)
@@ -97,7 +105,7 @@ class Main(QWidget):
         clearPlayListDataButton = QPushButton("Clear Playlist Data", self)
         clearPlayListDataButton.setGeometry(580,225,110,30)
         clearPlayListDataButton.clicked.connect(self.clearPlayListData)
-        clearPlayListDataButton.setFont(clearButtonFont)
+        clearPlayListDataButton.setFont(buttonFont)
 
         self.playListDownloadAlert = QLabel("", self)
         self.playListDownloadAlert.move(600, 160)
@@ -109,12 +117,26 @@ class Main(QWidget):
         self.chooseDirPlayListLabel.resize(500,40)
         self.chooseDirPlayListLabel.setFont(label)
 
+        # Color button section
+        changeColorButton = QPushButton("Change Background Color", self)
+        changeColorButton.setGeometry(530,280,160,30)
+        changeColorButton.setFont(buttonFont)
+        changeColorButton.clicked.connect(self.paintBackground)
+
      def center(self):
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
      
+     def paintBackground(self):
+        self.setAutoFillBackground(True)
+        colorPalette = self.palette()
+
+        color = QColorDialog.getColor()
+        colorPalette.setColor(self.backgroundRole(), color)
+        self.setPalette(colorPalette)
+
      def clearVideoData(self):
         self.videoDownloadAlert.setText("")
         self.chooseDirVideoLabel.setText("")
