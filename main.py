@@ -91,7 +91,27 @@ class Main(QWidget):
         self.pbarVideoLabel.move(290,155)
         self.pbarVideoLabel.resize(100,20)
         self.pbarVideoLabel.setFont(label)
-
+        
+        self.infoText = QLabel("", self)
+        self.infoText.move(200,100)
+        self.infoText.resize(400,20)
+        self.infoText.setFont(label)
+        
+        self.infoText2 = QLabel("", self)
+        self.infoText2.move(200,265)
+        self.infoText2.resize(400,20)
+        self.infoText2.setFont(label)
+        
+        self.searchButton = QPushButton("Search",self)
+        self.searchButton.setGeometry(585,110,90,30)
+        self.searchButton.setFont(label)
+        self.searchButton.clicked.connect(self.searchVideo)
+        
+        self.searchButton2 = QPushButton("Search",self)
+        self.searchButton2.setGeometry(585,260,90,30)
+        self.searchButton2.setFont(label)
+        self.searchButton2.clicked.connect(self.searchPlaylist)
+ 
         downloadButton1 = QPushButton("", self)
         downloadButton1.setGeometry(640,190,50,30)
         downloadButton1.setIcon(QIcon('./assets/cloud_download_32px.png'))
@@ -119,7 +139,7 @@ class Main(QWidget):
 
         # Color button section
         changeColorButton = QPushButton("Change Background Color", self)
-        changeColorButton.setGeometry(530,280,160,30)
+        changeColorButton.setGeometry(530,300,160,30)
         changeColorButton.setFont(buttonFont)
         changeColorButton.clicked.connect(self.paintBackground)
 
@@ -181,7 +201,21 @@ class Main(QWidget):
          self.filesize = video.filesize
          video.download(self.videoDir + "/")
          self.videoDownloadAlert.setText("Done!")
-
+         
+     def searchVideo(self):
+     	self.search = self.videoLink.text()
+     	self.videoİnfo = pytube.YouTube(self.search)
+     	
+     	self.videoTitle = self.videoİnfo.title
+     	self.infoText.setText("Video Title: " + self.videoTitle)
+     	
+     def searchPlaylist(self):
+     	self.search = self.playListLink.text()
+     	self.playlistİnfo = pytube.Playlist(self.search)
+     	
+     	self.playlistTitle = self.playlistİnfo.title
+     	self.infoText2.setText("Playlist Title: " + self.playlistTitle)
+     	
      def playListDownload(self):
         self.playList = self.playListLink.text()
         youtube_playlist = pytube.Playlist(self.playList)
@@ -193,7 +227,10 @@ class Main(QWidget):
                 stream.download(self.playListDir + "/")
                 self.playListDownloadAlert.setText("Done!")
              
+
+
 if __name__ == '__main__':
     uygulama = QApplication(sys.argv)
     app = Main()
     sys.exit(uygulama.exec_())
+   
