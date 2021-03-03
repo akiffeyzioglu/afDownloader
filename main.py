@@ -84,6 +84,13 @@ class Main(QWidget):
         self.chooseDirVideoLabel.move(15,90)
         self.chooseDirVideoLabel.resize(700,40)
         self.chooseDirVideoLabel.setFont(label)
+        
+        #download file type
+        self.fileType = QComboBox(self)
+        self.fileType.addItem("MP4")
+        self.fileType.addItem("MP3")
+        self.fileType.setGeometry(665,7,125,30)
+        self.fileType.setFont(buttonFont)
 
         # Playlist 
         playlistText = QLabel("Playlist Link:", self)
@@ -198,11 +205,19 @@ class Main(QWidget):
      def videoDownload(self):
           try:
           	self.link = self.videoLink.text()
-          	youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
-  	        video = youtube.streams.get_highest_resolution()
-  	        self.filesize = video.filesize
-  	        video.download(self.videoDir + "/")
-  	        self.videoDownloadAlert.setText("Done!")
+          	
+          	if self.fileType.currentText() == "MP4":
+          		youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
+          		video = youtube.streams.get_highest_resolution()
+          		self.filesize = video.filesize
+          		video.download(self.videoDir + "/")
+          		self.videoDownloadAlert.setText("Done!")
+          		
+          	elif self.fileType.currentText() == "MP3":
+          		youtube = pytube.YouTube(self.link).streams.filter(only_audio = True).first()
+          		self.filesize = youtube.filesize
+          		youtube.download(self.videoDir + "/",filename = youtube.title+".mp3")
+          		self.videoDownloadAlert.setText("Done!")
   	        
           except:
           	if self.videoLink.text() == "":
