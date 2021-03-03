@@ -196,41 +196,67 @@ class Main(QWidget):
         self.pbarPlayList.setValue(int(percent))
 
      def videoDownload(self):
-         self.link = self.videoLink.text()
-
-         youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
-         video = youtube.streams.get_highest_resolution()
-         self.filesize = video.filesize
-         video.download(self.videoDir + "/")
-         self.videoDownloadAlert.setText("Done!")
+          try:
+          	self.link = self.videoLink.text()
+          	youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
+  	        video = youtube.streams.get_highest_resolution()
+  	        self.filesize = video.filesize
+  	        video.download(self.videoDir + "/")
+  	        self.videoDownloadAlert.setText("Done!")
+  	        
+          except:
+          	if self.videoLink.text() == "":
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
+     	    		
+     	    	else:
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
          
      def searchVideo(self):
-     	self.search = self.videoLink.text()
-     	self.videoInfo = pytube.YouTube(self.search)
+     	try:
+	     	self.search = self.videoLink.text()
+	     	self.videoInfo = pytube.YouTube(self.search)
      	
-     	self.videoTitle = self.videoInfo.title
-     	self.videoInfoText.setText("Video Title: " + self.videoTitle)
+	     	self.videoTitle = self.videoInfo.title
+	     	self.videoInfoText.setText("Video Title: " + self.videoTitle)
      	
+     	except:
+     	    	if self.videoLink.text() == "":
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
+     	    		
+     	    	else:
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
+          	
      def searchPlaylist(self):
-     	self.search = self.playListLink.text()
-     	self.playListInfo = pytube.Playlist(self.search)
-     	
-     	self.playlistTitle = self.playListInfo.title
-     	self.playListInfoText.setText("Playlist Title: " + self.playlistTitle)
+      	try:
+      		self.search = self.playListLink.text()
+      		self.playListInfo = pytube.Playlist(self.search)
+      		self.playlistTitle = self.playListInfo.title
+      		self.playListInfoText.setText("Playlist Title: " + self.playlistTitle)
+      	except:
+      	   		if self.videoLink.text() == "":
+      	   			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
+      	   			
+      	   		else:
+      	   			self.errorMessage = QMessageBox.warning(self,"Error","Playlist Not Found!")
      	
      def playListDownload(self):
-        self.playList = self.playListLink.text()
-        youtube_playlist = pytube.Playlist(self.playList)
-
-        for playlist in youtube_playlist:
-                video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
-                stream = video.streams.get_highest_resolution()
-                self.filesize = stream.filesize
-                stream.download(self.playListDir + "/")
-                self.playListDownloadAlert.setText("Done!")
+         try:
+         	self.playList = self.playListLink.text()
+         	youtube_playlist = pytube.Playlist(self.playList)
+         	
+         	for playlist in youtube_playlist:
+         	       video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
+         	       stream = video.streams.get_highest_resolution()
+         	       self.filesize = stream.filesize
+         	       stream.download(self.playListDir + "/")
+         	       self.playListDownloadAlert.setText("Done!")
+         except:
+          		if self.videoLink.text() == "":
+          			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
+          			
+          		else:
+          		 self.errorMessage = QMessageBox.warning(self,"Error","Playlist Not Found")
              
-
-
 if __name__ == '__main__':
     uygulama = QApplication(sys.argv)
     app = Main()
