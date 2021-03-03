@@ -17,8 +17,8 @@ class Main(QWidget):
         super().__init__()
         self.filesize = 0
         self.setWindowTitle("afDownloader")
-        self.setGeometry(200, 200, 700, 330)
-        self.setFixedSize(700,330)
+        self.setGeometry(200, 200, 800, 400)
+        self.setFixedSize(800,400)
         self.setWindowIcon(QIcon('./assets/youtube-dl-gui.png'))
 
         # Background color palatte 
@@ -35,111 +35,111 @@ class Main(QWidget):
      def content(self):
         # Single Video
         videoText = QLabel("Video Link:", self)
-        videoText.move(20,45)
+        videoText.move(15,45)
         videoText.setFont(font)
         
         self.videoLink = QLineEdit(self)
-        self.videoLink.setGeometry(160,40,400,50)
+        self.videoLink.setGeometry(190,40,460,50)
         self.videoLink.setFont(font)
 
         self.pbarVideo = QProgressBar(self)
-        self.pbarVideo.setGeometry(400,7,200,25)
+        self.pbarVideo.setGeometry(450,7,200,25)
 
         self.pbarVideoLabel = QLabel("Progress Bar:", self)
-        self.pbarVideoLabel.move(290,7)
-        self.pbarVideoLabel.resize(100,20)
+        self.pbarVideoLabel.move(320,7)
+        self.pbarVideoLabel.resize(120,20)
         self.pbarVideoLabel.setFont(label)
 
-        downloadButton = QPushButton("", self)
-        downloadButton.setGeometry(630,40,50,30)
-        downloadButton.clicked.connect(self.videoDownload)
-        downloadButton.setIcon(QIcon('./assets/cloud_download_32px.png'))
+        videoDownloadButton = QPushButton("", self)
+        videoDownloadButton.setGeometry(730,40,60,30)
+        videoDownloadButton.clicked.connect(self.videoDownload)
+        videoDownloadButton.setIcon(QIcon('./assets/cloud_download_32px.png'))
 
-        chooseDirectory = QPushButton("", self)
-        chooseDirectory.setGeometry(575,40,50,30)
-        chooseDirectory.setIcon(QIcon('./assets/folder_32px.png'))
-        chooseDirectory.clicked.connect(self.chooseDirVideo)
+        chooseVideoDirectory = QPushButton("", self)
+        chooseVideoDirectory.setGeometry(665,40,60,30)
+        chooseVideoDirectory.setIcon(QIcon('./assets/folder_32px.png'))
+        chooseVideoDirectory.clicked.connect(self.chooseDirVideo)
 
         clearData = QPushButton("Clear Video Data", self)
-        clearData.setGeometry(575,75,105,30)
+        clearData.setGeometry(665,75,125,30)
         clearData.clicked.connect(self.clearVideoData)
         clearData.setFont(buttonFont)
 
+        self.videoInfoText = QLabel("", self)
+        self.videoInfoText.move(15,120)
+        self.videoInfoText.resize(700,20)
+        self.videoInfoText.setFont(label)
+        
+        self.videoSearchButton = QPushButton("Search",self)
+        self.videoSearchButton.setGeometry(665,110,125,30)
+        self.videoSearchButton.setFont(label)
+        self.videoSearchButton.clicked.connect(self.searchVideo)
+
         self.videoDownloadAlert = QLabel("", self)
-        self.videoDownloadAlert.move(600,7)
+        self.videoDownloadAlert.move(665,7)
         self.videoDownloadAlert.resize(50,20)
         self.videoDownloadAlert.setFont(label)
 
         self.chooseDirVideoLabel = QLabel("", self)
-        self.chooseDirVideoLabel.move(20,90)
-        self.chooseDirVideoLabel.resize(500,40)
+        self.chooseDirVideoLabel.move(15,90)
+        self.chooseDirVideoLabel.resize(700,40)
         self.chooseDirVideoLabel.setFont(label)
 
         # Playlist 
         playlistText = QLabel("Playlist Link:", self)
-        playlistText.move(20,200)
+        playlistText.move(15,200)
         playlistText.setFont(font)
         
         self.playListLink = QLineEdit(self)
-        self.playListLink.setGeometry(170,190,400,50)
+        self.playListLink.setGeometry(190,190,460,50)
         self.playListLink.setFont(font)
 
         self.pbarPlayList = QProgressBar(self)
-        self.pbarPlayList.setGeometry(400,155,200,25)
+        self.pbarPlayList.setGeometry(450,155,200,25)
 
         self.pbarVideoLabel = QLabel("Progress Bar:", self)
-        self.pbarVideoLabel.move(290,155)
-        self.pbarVideoLabel.resize(100,20)
+        self.pbarVideoLabel.move(320,155)
+        self.pbarVideoLabel.resize(120,20)
         self.pbarVideoLabel.setFont(label)
         
-        self.infoText = QLabel("", self)
-        self.infoText.move(200,100)
-        self.infoText.resize(400,20)
-        self.infoText.setFont(label)
+        self.playListInfoText = QLabel("", self)
+        self.playListInfoText.move(15,280)
+        self.playListInfoText.resize(700,20)
+        self.playListInfoText.setFont(label)
         
-        self.infoText2 = QLabel("", self)
-        self.infoText2.move(200,265)
-        self.infoText2.resize(400,20)
-        self.infoText2.setFont(label)
-        
-        self.searchButton = QPushButton("Search",self)
-        self.searchButton.setGeometry(585,110,90,30)
-        self.searchButton.setFont(label)
-        self.searchButton.clicked.connect(self.searchVideo)
-        
-        self.searchButton2 = QPushButton("Search",self)
-        self.searchButton2.setGeometry(585,260,90,30)
-        self.searchButton2.setFont(label)
-        self.searchButton2.clicked.connect(self.searchPlaylist)
+        self.playListsearchButton = QPushButton("Search",self)
+        self.playListsearchButton.setGeometry(665,260,125,30)
+        self.playListsearchButton.setFont(label)
+        self.playListsearchButton.clicked.connect(self.searchPlaylist)
  
-        downloadButton1 = QPushButton("", self)
-        downloadButton1.setGeometry(640,190,50,30)
-        downloadButton1.setIcon(QIcon('./assets/cloud_download_32px.png'))
-        downloadButton1.clicked.connect(self.playListDownload)
+        playListDownloadButton = QPushButton("", self)
+        playListDownloadButton.setGeometry(730,190,60,30)
+        playListDownloadButton.setIcon(QIcon('./assets/cloud_download_32px.png'))
+        playListDownloadButton.clicked.connect(self.playListDownload)
 
-        chooseDirectory1 = QPushButton("", self)
-        chooseDirectory1.setGeometry(580,190,50,30)
-        chooseDirectory1.setIcon(QIcon('./assets/folder_32px.png'))
-        chooseDirectory1.clicked.connect(self.chooseDirPlaylist)
+        choosePlayListDirectory = QPushButton("", self)
+        choosePlayListDirectory.setGeometry(665,190,60,30)
+        choosePlayListDirectory.setIcon(QIcon('./assets/folder_32px.png'))
+        choosePlayListDirectory.clicked.connect(self.chooseDirPlaylist)
 
         clearPlayListDataButton = QPushButton("Clear Playlist Data", self)
-        clearPlayListDataButton.setGeometry(580,225,110,30)
+        clearPlayListDataButton.setGeometry(665,225,125,30)
         clearPlayListDataButton.clicked.connect(self.clearPlayListData)
         clearPlayListDataButton.setFont(buttonFont)
 
         self.playListDownloadAlert = QLabel("", self)
-        self.playListDownloadAlert.move(600, 160)
+        self.playListDownloadAlert.move(665, 160)
         self.playListDownloadAlert.resize(50,20)
         self.playListDownloadAlert.setFont(label)
        
         self.chooseDirPlayListLabel = QLabel("", self)
-        self.chooseDirPlayListLabel.move(20,250)
-        self.chooseDirPlayListLabel.resize(500,40)
+        self.chooseDirPlayListLabel.move(15,250)
+        self.chooseDirPlayListLabel.resize(700,40)
         self.chooseDirPlayListLabel.setFont(label)
 
         # Color button section
         changeColorButton = QPushButton("Change Background Color", self)
-        changeColorButton.setGeometry(530,300,160,30)
+        changeColorButton.setGeometry(590,350,200,30)
         changeColorButton.setFont(buttonFont)
         changeColorButton.clicked.connect(self.paintBackground)
 
@@ -162,24 +162,26 @@ class Main(QWidget):
         self.chooseDirVideoLabel.setText("")
         self.videoLink.setText("")
         self.pbarVideo.setValue(0)
+        self.videoInfoText.setText("")
      
      def clearPlayListData(self):
          self.playListDownloadAlert.setText("")
          self.chooseDirPlayListLabel.setText("")
          self.playListLink.setText("")
          self.pbarPlayList.setValue(0)
+         self.playListInfoText.setText("")
 
      def chooseDirVideo(self):
         self.videoDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.videoDir:
-            self.chooseDirVideoLabel.setText(f"Directory selected: {self.videoDir}")
+            self.chooseDirVideoLabel.setText(f"Dir: {self.videoDir}")
         else:
             self.chooseDirVideoLabel.setText("Directory not selected.")
      
      def chooseDirPlaylist(self):
         self.playListDir = QFileDialog.getExistingDirectory(os.getenv("Desktop"))
         if self.playListDir:
-            self.chooseDirPlayListLabel.setText(f"Directory selected: {self.playListDir}")
+            self.chooseDirPlayListLabel.setText(f"Dir: {self.playListDir}")
         else:
             self.chooseDirPlayListLabel.setText("Directory not selected.")
       
@@ -194,41 +196,67 @@ class Main(QWidget):
         self.pbarPlayList.setValue(int(percent))
 
      def videoDownload(self):
-         self.link = self.videoLink.text()
-
-         youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
-         video = youtube.streams.get_highest_resolution()
-         self.filesize = video.filesize
-         video.download(self.videoDir + "/")
-         self.videoDownloadAlert.setText("Done!")
+          try:
+          	self.link = self.videoLink.text()
+          	youtube = pytube.YouTube(self.link, on_progress_callback=self.on_progressVideo)
+  	        video = youtube.streams.get_highest_resolution()
+  	        self.filesize = video.filesize
+  	        video.download(self.videoDir + "/")
+  	        self.videoDownloadAlert.setText("Done!")
+  	        
+          except:
+          	if self.videoLink.text() == "":
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
+     	    		
+     	    	else:
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
          
      def searchVideo(self):
-     	self.search = self.videoLink.text()
-     	self.videoİnfo = pytube.YouTube(self.search)
+     	try:
+	     	self.search = self.videoLink.text()
+	     	self.videoInfo = pytube.YouTube(self.search)
      	
-     	self.videoTitle = self.videoİnfo.title
-     	self.infoText.setText("Video Title: " + self.videoTitle)
+	     	self.videoTitle = self.videoInfo.title
+	     	self.videoInfoText.setText("Video Title: " + self.videoTitle)
      	
+     	except:
+     	    	if self.videoLink.text() == "":
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
+     	    		
+     	    	else:
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
+          	
      def searchPlaylist(self):
-     	self.search = self.playListLink.text()
-     	self.playlistİnfo = pytube.Playlist(self.search)
-     	
-     	self.playlistTitle = self.playlistİnfo.title
-     	self.infoText2.setText("Playlist Title: " + self.playlistTitle)
+      	try:
+      		self.search = self.playListLink.text()
+      		self.playListInfo = pytube.Playlist(self.search)
+      		self.playlistTitle = self.playListInfo.title
+      		self.playListInfoText.setText("Playlist Title: " + self.playlistTitle)
+      	except:
+      	   		if self.videoLink.text() == "":
+      	   			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
+      	   			
+      	   		else:
+      	   			self.errorMessage = QMessageBox.warning(self,"Error","Playlist Not Found!")
      	
      def playListDownload(self):
-        self.playList = self.playListLink.text()
-        youtube_playlist = pytube.Playlist(self.playList)
-
-        for playlist in youtube_playlist:
-                video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
-                stream = video.streams.get_highest_resolution()
-                self.filesize = stream.filesize
-                stream.download(self.playListDir + "/")
-                self.playListDownloadAlert.setText("Done!")
+         try:
+         	self.playList = self.playListLink.text()
+         	youtube_playlist = pytube.Playlist(self.playList)
+         	
+         	for playlist in youtube_playlist:
+         	       video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
+         	       stream = video.streams.get_highest_resolution()
+         	       self.filesize = stream.filesize
+         	       stream.download(self.playListDir + "/")
+         	       self.playListDownloadAlert.setText("Done!")
+         except:
+          		if self.videoLink.text() == "":
+          			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
+          			
+          		else:
+          		 self.errorMessage = QMessageBox.warning(self,"Error","Playlist Not Found")
              
-
-
 if __name__ == '__main__':
     uygulama = QApplication(sys.argv)
     app = Main()
