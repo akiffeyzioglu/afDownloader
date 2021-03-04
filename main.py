@@ -192,7 +192,7 @@ class Main(QWidget):
         else:
             self.chooseDirPlayListLabel.setText("Directory not selected.")
       
-     def on_progressVideo(self, stream=None, chunk=None, remaining=None):
+     def on_progressVideo(self,streams = None, chunk=None, remaining=None):
         bytes_received = self.filesize - remaining
         percent = round(100.0 * bytes_received / float(self.filesize), 1)
         self.pbarVideo.setValue(int(percent))
@@ -214,10 +214,18 @@ class Main(QWidget):
           		self.videoDownloadAlert.setText("Done!")
           		
           	elif self.fileType.currentText() == "MP3":
-          		youtube = pytube.YouTube(self.link).streams.filter(only_audio = True).first()
-          		self.filesize = youtube.filesize
-          		youtube.download(self.videoDir + "/",filename = youtube.title+".mp3")
+          		youtube = pytube.YouTube(self.link,on_progress_callback=self.on_progressVideo)
+          		music=youtube.streams.filter(only_audio = True).first()
+          		self.filesize = music.filesize
+          		music.download(self.videoDir + "/",filename = youtube.title.replace(" ",""))
+          		
+          		fileName = youtube.title.replace(" ","")
+          		
+          		mp4File = self.videoDir + "/"+ fileName+".mp4"
+          		mp3File = self.videoDir + "/"+ fileName+".mp3"          
+          		
           		self.videoDownloadAlert.setText("Done!")
+          		os.rename(mp4File,mp3File)
   	        
           except:
           	if self.videoLink.text() == "":
