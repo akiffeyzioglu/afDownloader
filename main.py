@@ -267,14 +267,20 @@ class Main(QWidget):
          	self.playList = self.playListLink.text()
          	youtube_playlist = pytube.Playlist(self.playList)
          	
+         	self.lengList = str(len(youtube_playlist))
+         	self.downloadList = 0
+         	
          	
          	for playlist in youtube_playlist:
+         	       self.playListDownloadAlert.setText(str(self.downloadList)+"/"+self.lengList+" Done")
          	       video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
          	       stream = video.streams.get_highest_resolution()
          	       self.filesize = stream.filesize
          	       stream.download(self.playListDir + "/")
+         	       self.downloadList += 1
          	       
-         	self.playListDownloadAlert.setText("Done!")
+         	self.playListDownloadAlert.setText(str(self.downloadList)+"/"+self.lengList+" Done")
+         	self.downloadList = 0
 	         
          except:
           		if self.videoLink.text() == "":
