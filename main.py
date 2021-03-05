@@ -267,12 +267,15 @@ class Main(QWidget):
          	self.playList = self.playListLink.text()
          	youtube_playlist = pytube.Playlist(self.playList)
          	
+         	
          	for playlist in youtube_playlist:
          	       video = pytube.YouTube(playlist, on_progress_callback=self.on_progressPlayList)
          	       stream = video.streams.get_highest_resolution()
          	       self.filesize = stream.filesize
          	       stream.download(self.playListDir + "/")
-         	       self.playListDownloadAlert.setText("Done!")
+         	       
+         	self.playListDownloadAlert.setText("Done!")
+	         
          except:
           		if self.videoLink.text() == "":
           			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
