@@ -66,8 +66,8 @@ class Main(QWidget):
         clearData.setFont(buttonFont)
 
         self.videoInfoText = QLabel("", self)
-        self.videoInfoText.move(15,120)
-        self.videoInfoText.resize(700,20)
+        self.videoInfoText.move(15,110)
+        self.videoInfoText.resize(700,50)
         self.videoInfoText.setFont(label)
         
         self.videoSearchButton = QPushButton("Search",self)
@@ -89,7 +89,7 @@ class Main(QWidget):
         self.fileType = QComboBox(self)
         self.fileType.addItem("MP4")
         self.fileType.addItem("MP3")
-        self.fileType.setGeometry(665,7,125,30)
+        self.fileType.setGeometry(190,5,100,30)
         self.fileType.setFont(buttonFont)
 
         # Playlist 
@@ -110,8 +110,8 @@ class Main(QWidget):
         self.pbarVideoLabel.setFont(label)
         
         self.playListInfoText = QLabel("", self)
-        self.playListInfoText.move(15,280)
-        self.playListInfoText.resize(700,20)
+        self.playListInfoText.move(15,260)
+        self.playListInfoText.resize(700,85)
         self.playListInfoText.setFont(label)
         
         self.playListsearchButton = QPushButton("Search",self)
@@ -238,9 +238,17 @@ class Main(QWidget):
      	try:
 	     	self.search = self.videoLink.text()
 	     	self.videoInfo = pytube.YouTube(self.search)
-     	
 	     	self.videoTitle = self.videoInfo.title
-	     	self.videoInfoText.setText("Video Title: " + self.videoTitle)
+	     	
+	     	if self.fileType.currentText() == "MP4":
+	     			     	video = self.videoInfo.streams.get_highest_resolution()
+	     			     	self.filesize = video.filesize
+	     			     	
+	     			     	self.videoInfoText.setText("Video Title: " + self.videoTitle+"\nFile Size: "+str(round((self.filesize/1048576),2))+" MB")
+	     	elif self.fileType.currentText() == "MP3":
+	     		music=self.videoInfo.streams.filter(only_audio = True).first()
+	     		self.filesize = music.filesize
+	     		self.videoInfoText.setText("Video Title: " + self.videoTitle+"\nFile Size: "+str(round((self.filesize/1048576),2))+" MB")
      	
      	except:
      	    	if self.videoLink.text() == "":
@@ -255,6 +263,19 @@ class Main(QWidget):
       		self.playListInfo = pytube.Playlist(self.search)
       		self.playlistTitle = self.playListInfo.title
       		self.playListInfoText.setText("Playlist Title: " + self.playlistTitle)
+      		
+      		self.fileSize = 0
+      		self.videoSize = 0
+      		
+      		for playlist in self.playListInfo:
+      			
+      			video = pytube.YouTube(playlist)
+      			video = video.streams.get_highest_resolution()
+      			self.filesize += video.filesize
+      			self.videoSize += 1
+      			
+      		self.playListInfoText.setText("PlayList Title: " + self.playlistTitle+"\nFile Size: "+str(round((self.filesize/1048576),2))+" MB\n"+str(self.videoSize)+" Video")
+      			
       	except:
       	   		if self.videoLink.text() == "":
       	   			self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Playlist Url")
