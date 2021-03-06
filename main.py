@@ -203,7 +203,7 @@ class Main(QWidget):
         self.pbarPlayList.setValue(int(percent))
 
      def videoDownload(self):
-  #        try:
+          try:
           	self.link = self.videoLink.text()
           	
           	if self.fileType.currentText() == "MP4":
@@ -227,12 +227,12 @@ class Main(QWidget):
           		self.videoDownloadAlert.setText("Done!")
           		os.rename(mp4File,mp3File)
   	        
-#          except:
-#          	if self.videoLink.text() == "":
-#     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
-#     	    		
-#     	    	else:
-#     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
+          except:
+          	if self.videoLink.text() == "":
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Please Write A Video Url")
+     	    		
+     	    	else:
+     	    		self.errorMessage = QMessageBox.warning(self,"Error","Video Not Found")
          
      def searchVideo(self):
      	try:
