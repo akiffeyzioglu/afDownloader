@@ -217,9 +217,9 @@ class Main(QWidget):
           		youtube = pytube.YouTube(self.link,on_progress_callback=self.on_progressVideo)
           		music=youtube.streams.filter(only_audio = True).first()
           		self.filesize = music.filesize
-          		music.download(self.videoDir + "/",filename = youtube.title.replace(" ",""))
+          		music.download(self.videoDir + "/",filename = youtube.title.replace(" ","").replace(".","").replace("|","").replace('"','').replace("'","").replace("?","").replace("#","").replace("@","").replace("₺","").replace("&","").replace("!","").replace("*","").replace(":","").replace(";",""))
           		
-          		fileName = youtube.title.replace(" ","")
+          		fileName = youtube.title.replace(" ","").replace(".","").replace("|","").replace('"','').replace("'","").replace("?","").replace("#","").replace("@","").replace("₺","").replace("&","").replace("!","").replace("*","").replace(":","").replace(";","")
           		
           		mp4File = self.videoDir + "/"+ fileName+".mp4"
           		mp3File = self.videoDir + "/"+ fileName+".mp3"          
