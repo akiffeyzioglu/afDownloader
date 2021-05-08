@@ -11,6 +11,8 @@ font = QFont("Century Gothic", 20)
 label = QFont("Century Gothic", 13)
 buttonFont = QFont("Century Gothic", 10)
 
+keyList = ["@","#","₺", "_","&","-","+","(",")","/","*","'",":",";","!","?","~","`","|","•","√","π","÷","×","¶","∆","¢","^","=","{","}","%","©","®","™","✓"," ",'"']
+
 class Main(QWidget):
 
      def __init__(self):
@@ -217,12 +219,20 @@ class Main(QWidget):
           		youtube = pytube.YouTube(self.link,on_progress_callback=self.on_progressVideo)
           		music=youtube.streams.filter(only_audio = True).first()
           		self.filesize = music.filesize
-          		music.download(self.videoDir + "/",filename = youtube.title.replace(" ","").replace(".","").replace("|","").replace('"','').replace("'","").replace("?","").replace("#","").replace("@","").replace("₺","").replace("&","").replace("!","").replace("*","").replace(":","").replace(";",""))
           		
-          		fileName = youtube.title.replace(" ","").replace(".","").replace("|","").replace('"','').replace("'","").replace("?","").replace("#","").replace("@","").replace("₺","").replace("&","").replace("!","").replace("*","").replace(":","").replace(";","")
+          		fileNameTitle = ""
           		
-          		mp4File = self.videoDir + "/"+ fileName+".mp4"
-          		mp3File = self.videoDir + "/"+ fileName+".mp3"          
+          		for i in youtube.title:
+          			if i in keyList:
+          				continue
+          				
+          			else:
+          				fileNameTitle += i
+          		
+          		music.download(self.videoDir + "/",filename = fileNameTitle)
+          		
+          		mp4File = self.videoDir + "/"+ fileNameTitle+".mp4"
+          		mp3File = self.videoDir + "/"+ fileNameTitle+".mp3"          
           		
           		self.videoDownloadAlert.setText("Done!")
           		os.rename(mp4File,mp3File)
